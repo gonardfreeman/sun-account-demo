@@ -1,0 +1,35 @@
+<template>
+	<span class="slds-grid slds-grid_align-spread">
+		<template if:false={isEdit}>
+			<template if:true={isUrlType}>
+				<div class="slds-truncate" title={col.label}>
+					<a href={url} target="_blank">{value}</a>
+				</div>
+			</template>
+			<template if:true={isCurrency}>
+				<div class="slds-truncate" title={col.label}>{currencyValue}</div>
+			</template>
+			<template if:true={isUnknown}>
+				<div class="slds-truncate" title={col.label}>{value} - {fieldType}</div>
+			</template>
+		</template>
+		<template if:true={isEdit}>
+			<lightning-input
+				value={value}
+				type={inputType}
+				label={col.label}
+				variant="label-hidden"
+				onchange={handleChange}
+			></lightning-input>
+		</template>
+		<template if:true={isEditable}>
+			<lightning-button-icon
+				variant="bare"
+				onclick={handleEdit}
+				icon-name={editIcon}
+				class="slds-cell-edit__button slds-m-left_x-small"
+				icon-class="slds-button__icon_hint slds-button__icon_edit"
+			></lightning-button-icon>
+		</template>
+	</span>
+</template>

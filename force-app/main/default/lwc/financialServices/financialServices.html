@@ -1,0 +1,66 @@
+<template>
+	<lightning-card title="Financial Services Account Listing" variant="Narrow" icon-name="standard:account">
+		<div class="slds-p-horizontal_small">
+			<lightning-input
+				type="search"
+				value={accountName}
+				class="slds-m-bottom_x-small"
+				title="Search Financial Accounts"
+				label="Search Financial Accounts"
+				onchange={handleAccountSearch}
+				placeholder="Enter account name..."
+			></lightning-input>
+			<table class="slds-table slds-table_striped">
+				<thead>
+					<tr class="slds-line-height_reset">
+						<th class="" scope="col" style="width: 3.75rem">
+							<div class="slds-truncate slds-assistive-text" title="Row #">Row #</div>
+						</th>
+						<template for:each={columns} for:item="col">
+							<th key={col.fieldName} scope="col">
+								<span class="slds-grid slds-grid_align-spread">
+									<div class="slds-truncate" title={col.label}>{col.label}</div>
+									<template if:true={col.showSort}>
+										<lightning-button-icon
+											variant="bare"
+											icon-name={col.iconName}
+											data-name={col.fieldName}
+											onclick={handleSortChange}
+										></lightning-button-icon>
+									</template>
+								</span>
+							</th>
+						</template>
+					</tr>
+				</thead>
+				<tbody>
+					<template for:each={accounts} for:item="record">
+						<tr key={record.Id}>
+							<th role="gridcell" tabindex="-1">
+								<div class="slds-truncate">
+									<span class="slds-row-number slds-text-body_small slds-text-color_weak"></span>
+								</div>
+							</th>
+							<template for:each={columns} for:item="col">
+								<td key={col.fieldName} role="gridcell" class="slds-cell-edit">
+									<c-table-row
+										col={col}
+										record={record}
+										oneditrecord={handleEditRecord}
+										oncanceledit={handleCancelEdit}
+									></c-table-row>
+								</td>
+							</template>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+			<template if:true={showSaveButton}>
+				<div class="footer">
+					<lightning-button variant="brand" title="Save" label="Save" onclick={handleSave}></lightning-button>
+					<lightning-button title="Cancel" label="Cancel" onclick={handleCancel}></lightning-button>
+				</div>
+			</template>
+		</div>
+	</lightning-card>
+</template>
